@@ -1,0 +1,21 @@
+# Python 3.12
+# RAG pipeline
+llama-index-core==0.14.25
+llama-index-llms-google-genai==0.11.3
+llama-index-embeddings-google-genai==0.6.0
+llama-index-vector-stores-chroma==0.6.0
+
+# Vector store
+chromadb==1.5.9
+
+# Gemini SDK
+google-genai==2.34.0
+httpx==0.28.1
+
+# Data loading
+pypdf==6.21.4
+pandas==3.1.0
+
+# Application
+streamlit==1.66.1
+python-dotenv==1.2.4

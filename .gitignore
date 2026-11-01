@@ -1,0 +1,14 @@
+# Secret API keys
+.env
+.env.*
+
+# Python environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Generated vector index
+chroma_db/
