@@ -6,8 +6,8 @@ import pandas as pd
 from llama_index.core import Document
 from pypdf import PdfReader
 
-from config import CATALOG_CSV, DATA_DIR, INFO_PDF, RULES_PDF
-from pdf_fixes import BREADCRUMB_MARK, LINE_FIXES, NOISE_LINES
+from library_rag.config import CATALOG_CSV, DATA_DIR, INFO_PDF, RULES_PDF
+from library_rag.pdf_fixes import BREADCRUMB_MARK, LINE_FIXES, NOISE_LINES
 
 PDF_DOC_TYPES = {INFO_PDF: "library_info", RULES_PDF: "library_rules"}
 CATALOG_COLUMNS = [

@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-PROJECT_DIR = Path(__file__).parent
+PROJECT_DIR = Path(__file__).parent.parent
 DATA_DIR = PROJECT_DIR / "data"
 CHROMA_DIR = PROJECT_DIR / "chroma_db"
 FINGERPRINT_FILE = CHROMA_DIR / "index_fingerprint.txt"

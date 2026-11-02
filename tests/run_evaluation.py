@@ -12,8 +12,8 @@ from pathlib import Path
 TESTS_DIR = Path(__file__).parent
 sys.path.insert(0, str(TESTS_DIR.parent))
 
-from config import EMBED_MODEL, LLM_MODEL
-from rag import answer_question, get_llm, load_index
+from library_rag.config import EMBED_MODEL, LLM_MODEL
+from library_rag.rag import answer_question, get_llm, load_index
 
 SECONDS_BETWEEN_QUESTIONS = 5
 

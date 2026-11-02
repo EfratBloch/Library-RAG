@@ -11,8 +11,8 @@ from llama_index.core.llms import ChatMessage
 from llama_index.llms.google_genai import GoogleGenAI
 from llama_index.vector_stores.chroma import ChromaVectorStore
 
-from citations import build_citations
-from config import (
+from library_rag.citations import build_citations
+from library_rag.config import (
     CATALOG_AGE_RANGES_TEXT,
     CHROMA_DIR,
     COLLECTION_NAME,
@@ -21,8 +21,8 @@ from config import (
     LLM_MODEL,
     LLM_TEMPERATURE,
 )
-from ingest import get_embed_model
-from query_parser import build_filters, parse_book_search
+from library_rag.ingest import get_embed_model
+from library_rag.query_parser import build_filters, parse_book_search
 
 NETWORK_ERRORS = (httpx.TransportError, ConnectionError)
 NETWORK_ATTEMPTS = 3
@@ -80,9 +80,9 @@ def load_index():
     try:
         collection = client.get_collection(COLLECTION_NAME)
     except NotFoundError as error:
-        raise IndexNotReadyError("The index was not built. Run: python ingest.py") from error
+        raise IndexNotReadyError("The index was not built. Run: python -m library_rag.ingest") from error
     if collection.count() == 0:
-        raise IndexNotReadyError("The index is empty. Run: python ingest.py")
+        raise IndexNotReadyError("The index is empty. Run: python -m library_rag.ingest")
     vector_store = ChromaVectorStore(chroma_collection=collection)
     return VectorStoreIndex.from_vector_store(vector_store, embed_model=get_embed_model())
 

@@ -15,8 +15,8 @@ import streamlit as st
 from google.genai.errors import APIError
 from streamlit.testing.v1 import AppTest
 
-from citations import Citation
-from rag import Answer, IndexNotReadyError
+from library_rag.citations import Citation
+from library_rag.rag import Answer, IndexNotReadyError
 
 APP = str(PROJECT_DIR / "app.py")
 PDF_CITATION = Citation(
@@ -34,9 +34,9 @@ def ask(question, answer=None, error=None, load_error=None):
     """Run the screen with a typed question and fake backend results."""
     st.cache_resource.clear()
     with (
-        patch("rag.load_index", return_value="index", side_effect=load_error),
-        patch("rag.get_llm", return_value="llm"),
-        patch("rag.answer_question", return_value=answer, side_effect=error),
+        patch("library_rag.rag.load_index", return_value="index", side_effect=load_error),
+        patch("library_rag.rag.get_llm", return_value="llm"),
+        patch("library_rag.rag.answer_question", return_value=answer, side_effect=error),
     ):
         app = AppTest.from_file(APP, default_timeout=30).run()
         app.text_input[0].set_value(question)
@@ -76,7 +76,7 @@ class AppTests(unittest.TestCase):
 
     def test_missing_index_is_explained(self):
         app = ask("שאלה", load_error=IndexNotReadyError("missing"))
-        self.assertIn("python ingest.py", app.error[0].value)
+        self.assertIn("python -m library_rag.ingest", app.error[0].value)
 
     def test_connection_error_is_explained(self):
         app = ask("שאלה", error=ConnectionError("no network"))
@@ -90,12 +90,12 @@ class AppTests(unittest.TestCase):
     def test_index_is_opened_again_after_a_rebuild(self):
         st.cache_resource.clear()
         with (
-            patch("rag.load_index", return_value="index") as load_index,
-            patch("rag.get_llm", return_value="llm"),
-            patch("rag.answer_question", return_value=Answer("תשובה", True)),
+            patch("library_rag.rag.load_index", return_value="index") as load_index,
+            patch("library_rag.rag.get_llm", return_value="llm"),
+            patch("library_rag.rag.answer_question", return_value=Answer("תשובה", True)),
         ):
             for version in (1, 1, 2):
-                with patch("rag.index_version", return_value=version):
+                with patch("library_rag.rag.index_version", return_value=version):
                     app = AppTest.from_file(APP, default_timeout=30).run()
                     app.text_input[0].set_value("שאלה")
                     app.button[0].click()

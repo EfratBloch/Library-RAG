@@ -6,7 +6,7 @@ import logging
 import streamlit as st
 from google.genai.errors import APIError
 
-from rag import NETWORK_ERRORS, IndexNotReadyError, answer_question, get_llm, index_version, load_index
+from library_rag.rag import NETWORK_ERRORS, IndexNotReadyError, answer_question, get_llm, index_version, load_index
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +58,7 @@ def request_answer():
 def error_message(error):
     """Explain a failure in Hebrew, without exposing technical details."""
     if isinstance(error, IndexNotReadyError):
-        return "מאגר המידע עדיין לא נבנה. יש להריץ פעם אחת את הפקודה: python ingest.py"
+        return "מאגר המידע עדיין לא נבנה. יש להריץ פעם אחת את הפקודה: python -m library_rag.ingest"
     if isinstance(error, RuntimeError):
         return "לא נמצא מפתח API. יש להוסיף את GOOGLE_API_KEY לקובץ .env."
     if isinstance(error, APIError) and error.code == 429:

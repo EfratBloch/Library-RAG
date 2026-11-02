@@ -1,9 +1,9 @@
 """Build the persistent vector index from the library PDFs and the book catalog.
 
 Usage:
-    python ingest.py            build the index, or skip if it is already up to date
-    python ingest.py --rebuild  build the index again even if it is up to date
-    python ingest.py --preview  print the chunks without calling any API
+    python -m library_rag.ingest            build the index, or skip if it is already up to date
+    python -m library_rag.ingest --rebuild  build the index again even if it is up to date
+    python -m library_rag.ingest --preview  print the chunks without calling any API
 """
 
 import argparse
@@ -23,7 +23,7 @@ from llama_index.core.schema import MetadataMode, TextNode
 from llama_index.embeddings.google_genai import GoogleGenAIEmbedding
 from llama_index.vector_stores.chroma import ChromaVectorStore
 
-from config import (
+from library_rag.config import (
     CHROMA_DIR,
     CHUNK_OVERLAP,
     CHUNK_SIZE,
@@ -35,7 +35,7 @@ from config import (
     FINGERPRINT_FILE,
     PROJECT_DIR,
 )
-from data_loader import load_book_documents, load_pdf_documents
+from library_rag.data_loader import load_book_documents, load_pdf_documents
 
 # Section headings of the PDFs. A heading such as "ג. שאילת ספרים" opens a section in the rules.
 RULES_HEADING = re.compile(r"^[א-ט]\. \S")

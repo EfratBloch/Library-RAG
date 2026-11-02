@@ -1,6 +1,6 @@
 """Corrections for the text that pypdf extracts from the two library PDFs."""
 
-from config import INFO_PDF, RULES_PDF
+from library_rag.config import INFO_PDF, RULES_PDF
 
 # Website navigation and footer lines captured when the pages were printed to PDF.
 NOISE_LINES = {

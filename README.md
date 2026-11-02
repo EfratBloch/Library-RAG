@@ -52,6 +52,19 @@ RAG הוא קיצור של Retrieval-Augmented Generation. במקום שהמוד
 
 הפירוט, כולל תרשים ונימוקים לבחירות, נמצא ב-[ARCHITECTURE.md](ARCHITECTURE.md).
 
+## מבנה הפרויקט
+
+```text
+Library-RAG/
+├── app.py              המסך
+├── library_rag/        קוד המערכת
+├── data/               קובצי המקור
+├── tests/              בדיקות, הערכה ותיעוד התוצאות
+├── README.md
+├── ARCHITECTURE.md
+└── requirements.txt
+```
+
 ## התקנה
 
 דרישות: Python 3.12 ומפתח Gemini API.
@@ -79,7 +92,7 @@ GOOGLE_API_KEY=המפתח_שלך
 ## יצירת המאגר
 
 ```bash
-.venv\Scripts\python ingest.py
+.venv\Scripts\python -m library_rag.ingest
 ```
 
 הבנייה לוקחת כדקה וחצי ושולחת 131 טקסטים ל-Gemini. בהרצה נוספת, אם הנתונים לא השתנו, לא נשלח כלום. לבנייה מחדש בכוח מוסיפים `--rebuild`. כדי לראות את הפיסות בלי קריאות ל-API מוסיפים `--preview`.

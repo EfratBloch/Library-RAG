@@ -12,10 +12,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import httpx
 
-from config import CATALOG_AGE_RANGES_TEXT
-from data_loader import load_book_documents
-from query_parser import build_filters, parse_book_search
-from rag import NETWORK_ATTEMPTS, NO_MATCHING_BOOKS_MESSAGE, answer_question
+from library_rag.config import CATALOG_AGE_RANGES_TEXT
+from library_rag.data_loader import load_book_documents
+from library_rag.query_parser import build_filters, parse_book_search
+from library_rag.rag import NETWORK_ATTEMPTS, NO_MATCHING_BOOKS_MESSAGE, answer_question
 
 
 class ParseBookSearchTests(unittest.TestCase):
@@ -75,19 +75,19 @@ class ParseBookSearchTests(unittest.TestCase):
 class NetworkRetryTests(unittest.TestCase):
     def test_brief_network_failure_is_retried(self):
         failure = httpx.ConnectError("connection closed")
-        with patch("rag.retrieve", side_effect=[failure, []]), patch("rag.time.sleep"):
+        with patch("library_rag.rag.retrieve", side_effect=[failure, []]), patch("library_rag.rag.time.sleep"):
             answer = answer_question("index", "llm", "ספר לילד בן 5")
         self.assertEqual(answer.text, NO_MATCHING_BOOKS_MESSAGE)
 
     def test_lasting_network_failure_is_raised(self):
         failure = httpx.ConnectError("connection closed")
-        with patch("rag.retrieve", side_effect=failure) as retrieve, patch("rag.time.sleep"):
+        with patch("library_rag.rag.retrieve", side_effect=failure) as retrieve, patch("library_rag.rag.time.sleep"):
             with self.assertRaises(httpx.ConnectError):
                 answer_question("index", "llm", "שאלה")
         self.assertEqual(retrieve.call_count, NETWORK_ATTEMPTS)
 
     def test_other_errors_are_not_retried(self):
-        with patch("rag.retrieve", side_effect=ValueError("a bug")) as retrieve:
+        with patch("library_rag.rag.retrieve", side_effect=ValueError("a bug")) as retrieve:
             with self.assertRaises(ValueError):
                 answer_question("index", "llm", "שאלה")
         self.assertEqual(retrieve.call_count, 1)

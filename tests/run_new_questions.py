@@ -11,8 +11,8 @@ from pathlib import Path
 TESTS_DIR = Path(__file__).parent
 sys.path.insert(0, str(TESTS_DIR.parent))
 
-from data_loader import load_book_documents
-from rag import NOT_FOUND_MESSAGE, answer_question, get_llm, load_index
+from library_rag.data_loader import load_book_documents
+from library_rag.rag import NOT_FOUND_MESSAGE, answer_question, get_llm, load_index
 
 SECONDS_BETWEEN_QUESTIONS = 5
 

@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from llama_index.core.schema import NodeWithScore, TextNode
 
-from citations import build_citations
+from library_rag.citations import build_citations
 
 
 def retrieved(text, metadata, node_id, score=0.8):

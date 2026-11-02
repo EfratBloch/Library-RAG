@@ -9,9 +9,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from config import CATALOG_CSV, INFO_PDF, RULES_PDF
-from data_loader import load_book_documents, load_pdf_documents, parse_age_range
-from ingest import build_nodes
+from library_rag.config import CATALOG_CSV, INFO_PDF, RULES_PDF
+from library_rag.data_loader import load_book_documents, load_pdf_documents, parse_age_range
+from library_rag.ingest import build_nodes
 
 
 class IngestTests(unittest.TestCase):
